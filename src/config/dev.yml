@@ -2,7 +2,7 @@
 db:
   mysql:
     host: 43.139.229.15 
-    username: 'root',
+    username: 'root'
     password: '123456'
     database: 'testdb'
     port: 3306
