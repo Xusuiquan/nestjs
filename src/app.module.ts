@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from './config/index';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { UserModule } from './module/business/user/user.module';
 
 // 配置模块
 const configModule = ConfigModule.forRoot({
@@ -30,6 +31,7 @@ const dbModule = TypeOrmModule.forRootAsync({
   imports: [
     configModule, // 配置模块
     dbModule, // 数据库信息模块
+    UserModule,
   ],
   controllers: [],
   providers: [],

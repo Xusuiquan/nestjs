@@ -6,3 +6,4 @@ db:
     password: '123456'
     database: 'testdb'
     port: 3306
+    synchronize: true
