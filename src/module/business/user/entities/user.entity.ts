@@ -7,7 +7,7 @@ export class UserEntity extends BaseEntity {
     public userId: number;
 
     @Column({type: 'varchar', name: 'user_name', length: 30, nullable: false, comment: '用户账号'})
-    public userName: number;
+    public userName: string;
 
     // 0女 1男 2未知
     @Column({ type: 'char', name: 'sex', default: '1', length: 1, comment: '性别' })
