@@ -7,3 +7,8 @@ db:
     database: 'testdb'
     port: 3306
     synchronize: true
+
+# jwt
+jwt:
+  secret: 'you_secretkey'
+  expiresIn: '1d'
