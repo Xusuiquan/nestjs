@@ -5,9 +5,9 @@ import { Repository } from "typeorm";
 import { CreateUserDto } from "./dto";
 import { ResultData } from "src/module/common/utils/result";
 import { JwtService } from "@nestjs/jwt";
-import { LoginDto } from "../main/dto";
+import { LoginDto, RegisterDto } from "../main/dto";
 import * as bcrypt from 'bcrypt';
-import { GenerateUUID } from "src/module/common/utils";
+import { GenerateUUID, GetNowDate } from "src/module/common/utils";
 
 @Injectable()
 export class UserService {
@@ -74,5 +74,30 @@ export class UserService {
         where: { userId: userId },
     })
     return data;
+  }
+
+  /**
+   * 用户注册
+   * @param user 
+   */
+  async register(user: RegisterDto) {
+    const loginDate = GetNowDate();
+    const checkUserNameUnique = await this.userRepo.findOne({
+      where: {
+        userName: user.username,
+      },
+      select: ['userName']
+    })
+    if (checkUserNameUnique) {
+      return ResultData.fail(500, `保存用户'${user.username}'失败，注册账号已存在`);
+    }
+    const data = {
+      ...user,
+      userName: user.username,
+      nickName: user.username,
+      loginDate,
+    }
+    await this.userRepo.save(data)
+    return ResultData.ok();
   }
 }
