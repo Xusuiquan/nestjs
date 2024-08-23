@@ -5,6 +5,9 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { UserModule } from './module/business/user/user.module';
 import { DeptModule } from './module/business/dept/dept.module';
 import { MainModule } from './module/business/main/main.module';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './module/common/guard/auth.guard';
+import { RolesGuard } from './module/common/guard/roles.guard';
 
 // 配置模块
 const configModule = ConfigModule.forRoot({
@@ -38,6 +41,15 @@ const dbModule = TypeOrmModule.forRootAsync({
     MainModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
 })
 export class AppModule {}

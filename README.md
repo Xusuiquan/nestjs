@@ -7,3 +7,5 @@
 密码: 123456
 
 - 实现注册功能
+- 新增权限守卫
+  npm install @nestjs/passport passport passport-jwt
