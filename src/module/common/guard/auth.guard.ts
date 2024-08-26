@@ -1,4 +1,4 @@
-import { ExecutionContext, ForbiddenException, Inject, Injectable, UnauthorizedException } from "@nestjs/common";
+import { ExecutionContext, ForbiddenException, Inject, Injectable, InternalServerErrorException, UnauthorizedException } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { ConfigService } from "@nestjs/config";
 import { Observable } from "rxjs";
@@ -26,6 +26,11 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
         if (!accessToken) throw new ForbiddenException('请重新登录');
         const atUserId = this.userService.parseToken(accessToken);
         if (!atUserId) throw new UnauthorizedException('当前登录已过期，请重新登录');
+
+        if (!accessToken.startsWith('Bearer ')) {
+            throw new InternalServerErrorException('无效的token');
+        }
+
         return await this.activate(ctx);
     }
 
