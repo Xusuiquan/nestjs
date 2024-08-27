@@ -29,6 +29,8 @@ const dbModule = TypeOrmModule.forRootAsync({
       keepConnectionAlive: true,
       timezone: '+08:00',
       ...configService.get('db.mysql'),
+      // synchronize: false, // 禁用自动同步
+      dropSchema: false, // 禁用自动删除表结构
     } as TypeOrmModuleOptions
   }
 })
